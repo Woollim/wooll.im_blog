@@ -23,28 +23,17 @@ export const Bio = () => (
                 }}
               />
               <div className="author-name">
-                <span className="author-name-prefix">Written by</span>
+                <span className="author-name-prefix">👨🏻‍💻</span>
                 <Link to={'/about'} className="author-name-content">
                   <span>@{author}</span>
                 </Link>
-                <div className="author-introduction">{introduction}</div>
+                <div className="author-introduction">{
+                  introduction.split('\n').map(line => <div>{line}</div>)
+                }</div>
                 <p className="author-socials">
-                  {social.github && (
-                    <a href={`https://github.com/${social.github}`}>GitHub</a>
-                  )}
-                  {social.medium && (
-                    <a href={`https://medium.com/${social.medium}`}>Medium</a>
-                  )}
-                  {social.twitter && (
-                    <a href={`https://twitter.com/${social.twitter}`}>
-                      Twitter
-                    </a>
-                  )}
-                  {social.facebook && (
-                    <a href={`https://www.facebook.com/${social.facebook}`}>
-                      Facebook
-                    </a>
-                  )}
+                  <a href={`https://github.com/${social.github}`}>GitHub</a>
+                  <a href={`https://www.linkedin.com/in/${social.linkedin}`}>Linkedin</a>
+                  <a href={`https://www.facebook.com/${social.facebook}`}>Facebook</a>
                 </p>
               </div>
             </div>
@@ -57,7 +46,7 @@ export const Bio = () => (
 
 const bioQuery = graphql`
   query BioQuery {
-    avatar: file(absolutePath: { regex: "/profile.png/" }) {
+    avatar: file(absolutePath: { regex: "/profile.jpg/" }) {
       childImageSharp {
         fixed(width: 72, height: 72) {
           ...GatsbyImageSharpFixed
@@ -69,9 +58,8 @@ const bioQuery = graphql`
         author
         introduction
         social {
-          twitter
           github
-          medium
+          linkedin
           facebook
         }
       }
